@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"bitbucket.org/apps_master_iglobal/magneto-pkg/env"
-
 	"github.com/stretchr/testify/assert"
+
+	"go-api-cms/pkg/env"
 )
 
 func TestGet(t *testing.T) {
