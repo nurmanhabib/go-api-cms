@@ -6,17 +6,36 @@ import (
 	"os"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/urfave/cli/v3"
 
+	"go-api-cms/config"
 	"go-api-cms/interfaces/cmd"
 	"go-api-cms/pkg/graceful"
+	"go-api-cms/pkg/provider/connection"
 	"go-api-cms/routes"
 )
 
 func main() {
+	_ = godotenv.Load(".env")
+
+	conf := config.New(
+		config.WithDatabase(),
+	)
+
+	dbConn, errDBConn := connection.NewDBConnection(conf)
+	if errDBConn != nil {
+		panic(errDBConn)
+	}
+
+	sqlDB, errSqlDB := dbConn.DB()
+	if errSqlDB != nil {
+		panic(errSqlDB)
+	}
+
 	commands := &cli.Command{
 		Commands: []*cli.Command{
-			cmd.DBMigrate(),
+			cmd.DBMigrate(sqlDB),
 		},
 
 		// Default HTTP Server
