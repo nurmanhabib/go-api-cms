@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
 	"go-api-cms/app"
@@ -36,7 +37,8 @@ func (svc *UserAuthService) Login(ctx context.Context, username string, password
 		}
 	}
 
-	if user.Password != password {
+	errCompare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if errCompare != nil {
 		return nil, exception.NewUnprocessableEntity([]exception.FieldViolation{
 			{
 				Field:       "username",
@@ -46,8 +48,4 @@ func (svc *UserAuthService) Login(ctx context.Context, username string, password
 	}
 
 	return user, nil
-}
-
-func (svc *UserAuthService) GenerateToken(ctx context.Context, user *entity.User) (*entity.User, error) {
-	return nil, nil
 }
