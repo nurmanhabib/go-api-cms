@@ -27,6 +27,17 @@ func (r *RoleDBRepository) FindById(ctx context.Context, id int64) (*entity.Role
 	panic("implement me")
 }
 
+func (r *RoleDBRepository) FindByNames(ctx context.Context, names []string) ([]*entity.Role, error) {
+	var roles []*entity.Role
+
+	err := r.db.Where("name in (?)", names).Find(&roles).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return roles, nil
+}
+
 func (r *RoleDBRepository) Create(ctx context.Context, role *entity.Role) error {
 	//TODO implement me
 	panic("implement me")

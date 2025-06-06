@@ -26,6 +26,15 @@ func (u *UserDBRepository) FindByID(ctx context.Context, userID uuid.UUID) (*ent
 	return &user, nil
 }
 
+func (u *UserDBRepository) FindByUsername(ctx context.Context, username string) (*entity.User, error) {
+	var user entity.User
+	err := u.db.WithContext(ctx).First(&user, "username = ?", username).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
 func (u *UserDBRepository) Create(ctx context.Context, user *entity.User) error {
 	return u.db.WithContext(ctx).Create(user).Error
 }
@@ -40,8 +49,20 @@ func (u *UserDBRepository) Update(ctx context.Context, userID uuid.UUID, user *e
 }
 
 func (u *UserDBRepository) AssignRoles(ctx context.Context, userID uuid.UUID, roleIDs []uuid.UUID) error {
-	//TODO implement me
-	panic("implement me")
+	var userRoles []entity.UserRole
+
+	for _, roleID := range roleIDs {
+		userRoles = append(userRoles, entity.UserRole{
+			UserID: userID,
+			RoleID: roleID,
+		})
+	}
+
+	if len(userRoles) == 0 {
+		return nil
+	}
+
+	return u.db.WithContext(ctx).Save(&userRoles).Error
 }
 
 func (u *UserDBRepository) AssignPermissions(ctx context.Context, userID uuid.UUID, permissionIDs []uuid.UUID) error {
