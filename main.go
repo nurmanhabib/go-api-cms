@@ -9,6 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/urfave/cli/v3"
 
+	"go-api-cms/app"
 	"go-api-cms/config"
 	"go-api-cms/interfaces/cmd"
 	"go-api-cms/pkg/graceful"
@@ -21,6 +22,12 @@ func main() {
 
 	conf := config.New(
 		config.WithDatabase(),
+	)
+
+	apps := app.New(
+		app.WithConfig(conf),
+		app.WithDatabase(),
+		app.WithRepositories(),
 	)
 
 	dbConn, errDBConn := connection.NewDBConnection(conf)
@@ -40,7 +47,7 @@ func main() {
 
 		// Default HTTP Server
 		Action: func(ctx context.Context, command *cli.Command) error {
-			router := routes.Api()
+			router := routes.Api(apps)
 			return graceful.RunHTTPServerWithGracefulShutdown(router, ":8087", 10*time.Second)
 		},
 	}
