@@ -9,7 +9,7 @@ ARG BUILD_VERSION="0.0.0"
 ARG BUILD_COMMIT=none
 ARG BUILD_DATE=unknown
 
-WORKDIR /build
+WORKDIR /www
 
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
@@ -26,7 +26,10 @@ RUN apk add --no-cache tzdata
 
 WORKDIR /www
 
-COPY --from=builder /build/main /www/
-COPY --from=builder /build/database/migrations/ /www/database/migrations/
+COPY --from=builder /www/main /www/
+COPY --from=builder /www/database/migrations/ /www/database/migrations/
+COPY --from=builder /www/entrypoint.sh /www/entrypoint.sh
 
-ENTRYPOINT ["/www/main"]
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["/www/entrypoint.sh"]
