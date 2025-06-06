@@ -3,8 +3,9 @@ package config
 import "go-api-cms/pkg/env"
 
 type Config struct {
-	App App
-	DB  Database
+	App  App
+	DB   Database
+	Auth Auth
 }
 
 type Option func(conf *Config)
