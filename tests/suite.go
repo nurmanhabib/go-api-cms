@@ -11,6 +11,7 @@ import (
 	"go-api-cms/database/seeder"
 	"go-api-cms/interfaces/cmd"
 	"go-api-cms/internal/basepath"
+	"go-api-cms/tests/database"
 )
 
 type Suite struct {
@@ -38,6 +39,19 @@ func NewSuite() *Suite {
 			cmd.DBMigrate(apps.Sql),
 			cmd.DBSeeder(apps.DB),
 		},
+	}
+
+	// Prepare clear database first
+	switch apps.Config.DB.Driver {
+	case "postgres":
+		if errDrop := database.ClearPostgresSchema(apps.Sql); errDrop != nil {
+			panic(errDrop)
+		}
+
+	case "mysql":
+		if errDrop := database.ClearMySQLDatabase(apps.Sql, apps.Config.DB.Database); errDrop != nil {
+			panic(errDrop)
+		}
 	}
 
 	if errRun := commands.Run(ctx, []string{"", "db:migrate"}); errRun != nil {
