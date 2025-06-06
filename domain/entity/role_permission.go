@@ -10,5 +10,4 @@ type RolePermission struct {
 	RoleID       uuid.UUID
 	PermissionID uuid.UUID
 	CreatedAt    time.Time
-	UpdatedAt    time.Time
 }

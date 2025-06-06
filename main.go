@@ -43,6 +43,7 @@ func main() {
 	commands := &cli.Command{
 		Commands: []*cli.Command{
 			cmd.DBMigrate(sqlDB),
+			cmd.DBSeeder(dbConn),
 		},
 
 		// Default HTTP Server
