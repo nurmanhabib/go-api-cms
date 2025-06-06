@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 
 	"go-api-cms/domain/entity"
 )
@@ -62,7 +63,10 @@ func (u *UserDBRepository) AssignRoles(ctx context.Context, userID uuid.UUID, ro
 		return nil
 	}
 
-	return u.db.WithContext(ctx).Save(&userRoles).Error
+	return u.db.WithContext(ctx).Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "user_id"}, {Name: "role_id"}},
+		DoNothing: true,
+	}).Create(&userRoles).Error
 }
 
 func (u *UserDBRepository) AssignPermissions(ctx context.Context, userID uuid.UUID, permissionIDs []uuid.UUID) error {
