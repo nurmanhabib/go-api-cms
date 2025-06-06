@@ -2,12 +2,41 @@
 
 This project is a backend API built with Golang, following a clean architecture approach. The project structure is organized into several layers to ensure modularity and scalability.
 
-## 🚀 How to Run the Application
+## 🚀 Running the Application with Docker Compose
 
-### 📌 Notes
-Make sure you have a valid .env file (based on .env.example) before running the application.
+This application can be run entirely using **Docker Compose**, keeping your host environment clean and untouched. All dependencies (such as the database) will run inside isolated containers.
 
-### Run in Development Mode
+However, to avoid port conflicts with existing services on your host machine, take note of the following:
+
+📌 Important Environment Variables
+- `FORWARD_DB_PORT`: The port on your host that forwards to the PostgreSQL service inside the container.
+  - Default: `5432`
+  - If you already have PostgreSQL running on port 5432 on your host, change this to another port like 5433.
+- `APP_PORT`: The port on your host used to access the application.
+  - Example: `8080`
+
+Create a .env file in the project root:
+```
+FORWARD_DB_PORT=5433
+APP_PORT=8080
+```
+
+### ⚡️ Minimal Configuration – Just Works
+
+You can run the application with a single command:
+
+```bash
+docker compose up -d
+```
+
+### 🛑 Stopping the Application
+
+To stop and remove containers:
+```bash
+docker compose down
+```
+
+## Run in Development Mode
 ```bash
 go run .
 ```
@@ -19,8 +48,17 @@ go run . db:migrate
 
 ### Run Database Seeders
 ```bash
-go run . db:migrate
+go run . db:seed
 ```
+
+## 🧪 Database Seeding
+
+Once the application starts and the database seeder runs, the following pre-defined roles will be available:
+- admin
+- editor
+
+These roles are created automatically during the initial database seeding process.
+You can assign these roles to users for role-based access control (RBAC) in the application.
 
 ## 📁 Project Directory Structure
 ```
