@@ -27,3 +27,21 @@ func DBMigrate(db *sql.DB) *cli.Command {
 		},
 	}
 }
+
+func DBRollback(db *sql.DB) *cli.Command {
+	return &cli.Command{
+		Name:  "db:rollback",
+		Usage: "Run database migrations",
+		Action: func(ctx context.Context, command *cli.Command) error {
+			if err := goose.SetDialect("postgres"); err != nil {
+				return err
+			}
+
+			if err := goose.Down(db, basepath.Dir("database/migrations")); err != nil {
+				return err
+			}
+
+			return nil
+		},
+	}
+}
