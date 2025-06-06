@@ -1,6 +1,10 @@
 package config
 
-import "go-api-cms/pkg/env"
+import (
+	"fmt"
+
+	"go-api-cms/pkg/env"
+)
 
 type Database struct {
 	Driver   string
@@ -20,8 +24,22 @@ func WithDatabase() Option {
 			Port:     env.GetInt("DB_PORT", 5432),
 			Username: env.Get("DB_USERNAME", "root"),
 			Password: env.Get("DB_PASSWORD", ""),
-			Database: env.Get("DB_DATABASE", "go_api"),
+			Database: env.Get("DB_DATABASE", "go_api_cms"),
 			Timezone: env.Get("DB_TIMEZONE", "Asia/Jakarta"),
+		}
+	}
+}
+
+func WithTestDatabase() Option {
+	return func(conf *Config) {
+		conf.DB = Database{
+			Driver:   env.Get("TEST_DB_DRIVER", env.Get("DB_DRIVER", "postgres")),
+			Host:     env.Get("TEST_DB_HOST", env.Get("DB_HOST", "127.0.0.1")),
+			Port:     env.GetInt("TEST_DB_PORT", env.GetInt("DB_PORT", 5432)),
+			Username: env.Get("TEST_DB_USERNAME", env.Get("DB_USERNAME", "rootSS")),
+			Password: env.Get("TEST_DB_PASSWORD", env.Get("DB_PASSWORD", "")),
+			Database: env.Get("TEST_DB_DATABASE", fmt.Sprintf("%s_test", env.Get("DB_DATABASE", "go_api_cms"))),
+			Timezone: env.Get("TEST_DB_TIMEZONE", "Asia/Jakarta"),
 		}
 	}
 }
