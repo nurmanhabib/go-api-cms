@@ -110,3 +110,33 @@ func (a *ArticleService) Update(ctx context.Context, articleID string, editArtic
 
 	return existsArticle, newEntityArticleVersion, nil
 }
+
+func (a *ArticleService) RollbackVersion(ctx context.Context, articleID string, version int64) (article *entity.Article, articleVersion *entity.ArticleVersion, err error) {
+	txRepo, tx := a.app.Repo.Tx()
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+		} else {
+			tx.Commit()
+		}
+	}()
+
+	existsArticle, err := txRepo.ArticleRepo.FindByID(ctx, articleID)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	existsVersion, err := txRepo.ArticleVersionRepo.FindByArticleIDAndVersion(ctx, articleID, version)
+	if err != nil {
+		return existsArticle, nil, err
+	}
+
+	existsArticle.CurrentVersionID = existsVersion.ID
+
+	errUpdate := txRepo.ArticleRepo.Update(ctx, articleID, existsArticle)
+	if errUpdate != nil {
+		return existsArticle, nil, errUpdate
+	}
+
+	return existsArticle, existsVersion, nil
+}

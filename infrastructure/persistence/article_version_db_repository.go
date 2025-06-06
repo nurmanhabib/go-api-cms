@@ -17,8 +17,14 @@ func NewArticleVersionDBRepository(db *gorm.DB) *ArticleVersionDBRepository {
 }
 
 func (a *ArticleVersionDBRepository) FindByArticleIDAndVersion(ctx context.Context, articleID string, version int64) (*entity.ArticleVersion, error) {
-	//TODO implement me
-	panic("implement me")
+	var articleVersion entity.ArticleVersion
+
+	err := a.db.WithContext(ctx).First(&articleVersion, "article_id = ? AND version = ?", articleID, version).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &articleVersion, nil
 }
 
 func (a *ArticleVersionDBRepository) FindByID(ctx context.Context, articleVersionID string) (*entity.ArticleVersion, error) {

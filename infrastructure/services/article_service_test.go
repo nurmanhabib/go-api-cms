@@ -52,5 +52,15 @@ func TestArticleService_Create(t *testing.T) {
 		assert.Equal(t, int64(2), editedArticleVersion.Version)
 		assert.Equal(t, "new-slug-article", editedArticle.Slug)
 		assert.Equal(t, "Edit Title", editedArticleVersion.Title)
+
+		t.Run("rollback version test", func(t *testing.T) {
+			rollbackArticle, rollbackArticleVersion, errRollback := svc.RollbackVersion(ctx, editedArticle.ID.String(), 1)
+			require.NoError(t, errRollback)
+			require.NotNil(t, rollbackArticle)
+			require.NotNil(t, rollbackArticleVersion)
+
+			assert.Equal(t, articleVersion.ID, rollbackArticleVersion.ID)
+			assert.NotEqual(t, "Edit Title", rollbackArticleVersion.Title)
+		})
 	})
 }
