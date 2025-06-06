@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -40,7 +41,7 @@ func main() {
 		// Default HTTP Server
 		Action: func(ctx context.Context, command *cli.Command) error {
 			router := routes.Api(apps)
-			return graceful.RunHTTPServerWithGracefulShutdown(router, ":8087", 10*time.Second)
+			return graceful.RunHTTPServerWithGracefulShutdown(router, fmt.Sprintf(":%d", apps.Config.App.Port), 10*time.Second)
 		},
 	}
 
