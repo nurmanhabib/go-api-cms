@@ -33,6 +33,7 @@ func main() {
 	commands := &cli.Command{
 		Commands: []*cli.Command{
 			cmd.DBMigrate(apps.Sql),
+			cmd.DBRollback(apps.Sql),
 			cmd.DBSeeder(apps.DB),
 		},
 
