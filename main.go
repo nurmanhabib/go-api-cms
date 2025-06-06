@@ -13,7 +13,6 @@ import (
 	"go-api-cms/config"
 	"go-api-cms/interfaces/cmd"
 	"go-api-cms/pkg/graceful"
-	"go-api-cms/pkg/provider/connection"
 	"go-api-cms/routes"
 )
 
@@ -22,6 +21,7 @@ func main() {
 
 	conf := config.New(
 		config.WithDatabase(),
+		config.WithJWT(),
 	)
 
 	apps := app.New(
@@ -30,20 +30,10 @@ func main() {
 		app.WithRepositories(),
 	)
 
-	dbConn, errDBConn := connection.NewDBConnection(conf)
-	if errDBConn != nil {
-		panic(errDBConn)
-	}
-
-	sqlDB, errSqlDB := dbConn.DB()
-	if errSqlDB != nil {
-		panic(errSqlDB)
-	}
-
 	commands := &cli.Command{
 		Commands: []*cli.Command{
-			cmd.DBMigrate(sqlDB),
-			cmd.DBSeeder(dbConn),
+			cmd.DBMigrate(apps.Sql),
+			cmd.DBSeeder(apps.DB),
 		},
 
 		// Default HTTP Server
