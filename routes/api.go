@@ -17,6 +17,8 @@ func Api(app *app.App) *gin.Engine {
 	router.Use(middleware.ErrorHandler())
 
 	pingRoutes(router)
+
+	authRoutes(router, app)
 	userRegisterRoutes(router, app)
 	articleRoutes(router, app)
 
@@ -29,6 +31,12 @@ func pingRoutes(e *gin.Engine) {
 			"message": "pong",
 		})
 	})
+}
+
+func authRoutes(e *gin.Engine, app *app.App) {
+	c := controller.NewAuthController(app)
+
+	e.POST("/api/v1/auth/token", c.Login)
 }
 
 func userRegisterRoutes(e *gin.Engine, app *app.App) {

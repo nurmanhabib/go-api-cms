@@ -37,7 +37,7 @@ func (svc *UserAuthService) Login(ctx context.Context, username string, password
 		}
 	}
 
-	errCompare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	errCompare := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
 	if errCompare != nil {
 		return nil, exception.NewUnprocessableEntity([]exception.FieldViolation{
 			{
