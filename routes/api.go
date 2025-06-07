@@ -18,6 +18,7 @@ func Api(app *app.App) *gin.Engine {
 
 	pingRoutes(router)
 	userRegisterRoutes(router, app)
+	articleRoutes(router, app)
 
 	return router
 }
@@ -34,4 +35,10 @@ func userRegisterRoutes(e *gin.Engine, app *app.App) {
 	c := controller.NewUserRegisterController(app)
 
 	e.POST("/api/v1/user/register", c.Register)
+}
+
+func articleRoutes(e *gin.Engine, app *app.App) {
+	c := controller.NewArticleController(app)
+
+	e.GET("/api/v1/articles/:slug", c.GetArticlesBySlug)
 }

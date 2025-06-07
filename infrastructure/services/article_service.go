@@ -25,6 +25,20 @@ func NewArticleService(app *app.App) *ArticleService {
 	return &ArticleService{app: app}
 }
 
+func (a *ArticleService) GetBySlug(ctx context.Context, slug string) (*entity.Article, *entity.ArticleVersion, error) {
+	article, err := a.app.Repo.ArticleRepo.FindBySlug(ctx, slug)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	articleVersion, err := a.app.Repo.ArticleVersionRepo.FindByID(ctx, article.CurrentVersionID.String())
+	if err != nil {
+		return article, nil, err
+	}
+
+	return article, articleVersion, nil
+}
+
 func (a *ArticleService) Create(ctx context.Context, newArticle *ArticleRequest) (article *entity.Article, articleVersion *entity.ArticleVersion, err error) {
 	txRepo, tx := a.app.Repo.Tx()
 	defer func() {

@@ -17,8 +17,12 @@ func NewArticleDBRepository(db *gorm.DB) *ArticleDBRepository {
 }
 
 func (a *ArticleDBRepository) FindBySlug(ctx context.Context, slug string) (*entity.Article, error) {
-	//TODO implement me
-	panic("implement me")
+	var article entity.Article
+	err := a.db.WithContext(ctx).First(&article, "slug = ?", slug).Error
+	if err != nil {
+		return nil, err
+	}
+	return &article, nil
 }
 
 func (a *ArticleDBRepository) FindByID(ctx context.Context, articleID string) (*entity.Article, error) {
