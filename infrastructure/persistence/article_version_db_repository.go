@@ -19,7 +19,7 @@ func NewArticleVersionDBRepository(db *gorm.DB) *ArticleVersionDBRepository {
 func (a *ArticleVersionDBRepository) FindByArticleID(ctx context.Context, articleID string) ([]*entity.ArticleVersion, error) {
 	var articleVersions []*entity.ArticleVersion
 
-	err := a.db.WithContext(ctx).Find(&articleVersions, "article_id = ?", articleID).Error
+	err := a.db.WithContext(ctx).Order("version DESC").Find(&articleVersions, "article_id = ?", articleID).Error
 	if err != nil {
 		return nil, err
 	}
