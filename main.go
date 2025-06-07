@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -9,10 +10,10 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/urfave/cli/v3"
 
+	"go-api-cms/app"
 	"go-api-cms/config"
 	"go-api-cms/interfaces/cmd"
 	"go-api-cms/pkg/graceful"
-	"go-api-cms/pkg/provider/connection"
 	"go-api-cms/routes"
 )
 
@@ -21,27 +22,26 @@ func main() {
 
 	conf := config.New(
 		config.WithDatabase(),
+		config.WithJWT(),
 	)
 
-	dbConn, errDBConn := connection.NewDBConnection(conf)
-	if errDBConn != nil {
-		panic(errDBConn)
-	}
-
-	sqlDB, errSqlDB := dbConn.DB()
-	if errSqlDB != nil {
-		panic(errSqlDB)
-	}
+	apps := app.New(
+		app.WithConfig(conf),
+		app.WithDatabase(),
+		app.WithRepositories(),
+	)
 
 	commands := &cli.Command{
 		Commands: []*cli.Command{
-			cmd.DBMigrate(sqlDB),
+			cmd.DBMigrate(apps.Sql),
+			cmd.DBRollback(apps.Sql),
+			cmd.DBSeeder(apps.DB),
 		},
 
 		// Default HTTP Server
 		Action: func(ctx context.Context, command *cli.Command) error {
-			router := routes.Api()
-			return graceful.RunHTTPServerWithGracefulShutdown(router, ":8087", 10*time.Second)
+			router := routes.Api(apps)
+			return graceful.RunHTTPServerWithGracefulShutdown(router, fmt.Sprintf(":%d", apps.Config.App.Port), 10*time.Second)
 		},
 	}
 
