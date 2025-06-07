@@ -104,3 +104,12 @@ go-api-cms/
 - GORM (ORM)
 - HTTP + Middleware
 - CLI for migration & seeding
+
+## 📊 Entity Relationship Diagram
+![App Preview](__doc/erd.png)
+
+## 📬 Postman Collection & Environment
+
+To help you test the API quickly, this project includes:
+- ✅ A Postman Collection ([Go_API_CMS.postman_collection.json](__doc/Go_API_CMS.postman_collection.json))
+- 🌐 A Postman Environment ([go-api-cms-local.postman_environment.json](__doc/go-api-cms-local.postman_environment.json))

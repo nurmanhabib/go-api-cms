@@ -1,0 +1,914 @@
+{
+	"info": {
+		"_postman_id": "e6984160-0e8b-4f97-920e-1493063441f7",
+		"name": "Go API CMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "143809"
+	},
+	"item": [
+		{
+			"name": "User Registrations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Inggih\",\n    \"username\": \"inggih\",\n    \"email\": \"inggih@gmail.com\",\n    \"password\": \"password\",\n    \"role\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/user/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Inggih\",\n    \"username\": \"inggih\",\n    \"email\": \"inggih@gmail.com\",\n    \"password\": \"password\",\n    \"role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/user/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 06 Jun 2025 05:46:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "230"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"id\": \"b7b5283c-cbac-40f2-8339-084aa7e90c70\",\n        \"name\": \"Inggih\",\n        \"username\": \"inggih\",\n        \"email\": \"inggih@gmail.com\",\n        \"is_active\": true,\n        \"created_at\": \"2025-06-06T12:46:12.450763+07:00\",\n        \"updated_at\": \"2025-06-06T12:46:12.450763+07:00\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Auth Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Ambil response body",
+							"const response = pm.response.json();",
+							"",
+							"if (!response.data) {",
+							"    console.log(\"Failed generate access token:\", response.responseCode);",
+							"    return;",
+							"}",
+							"",
+							"// Set variabel environment",
+							"pm.environment.set(\"access_token\", response.data.token);",
+							"",
+							"// Log untuk memastikan berhasil",
+							"console.log(\"Token:\", response.data.token);",
+							"return;",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"inggih2\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/auth/token",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Inggih\",\n    \"username\": \"inggih\",\n    \"email\": \"inggih@gmail.com\",\n    \"password\": \"password\",\n    \"role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/user/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 06 Jun 2025 05:46:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "230"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"id\": \"b7b5283c-cbac-40f2-8339-084aa7e90c70\",\n        \"name\": \"Inggih\",\n        \"username\": \"inggih\",\n        \"email\": \"inggih@gmail.com\",\n        \"is_active\": true,\n        \"created_at\": \"2025-06-06T12:46:12.450763+07:00\",\n        \"updated_at\": \"2025-06-06T12:46:12.450763+07:00\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Article",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"slug\": \"understanding-jwt-authentication\",\n  \"title\": \"Understanding JWT Authentication\",\n  \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n  \"status\": \"published\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/articles",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"articles"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "401 - Unauthorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"slug\": \"introduction-to-go\",\n  \"title\": \"Introduction to Go\",\n  \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n  \"status\": \"published\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:19:41 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "28"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Token is invalid\"\n}"
+				},
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"slug\": \"introduction-to-go\",\n  \"title\": \"Introduction to Go\",\n  \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n  \"status\": \"published\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:20:07 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "783"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"article\": {\n            \"id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"slug\": \"introduction-to-go\",\n            \"current_version_id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"created_at\": \"2025-06-07T08:20:07.573344+07:00\",\n            \"updated_at\": \"2025-06-07T08:20:07.573344+07:00\"\n        },\n        \"version\": {\n            \"id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"article_id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"version\": 1,\n            \"title\": \"Introduction to Go\",\n            \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n            \"status\": \"published\",\n            \"created_by\": \"135482d4-9810-43d5-9b8f-d1b306c9fbcf\",\n            \"created_at\": \"2025-06-07T08:20:07.578214+07:00\"\n        }\n    }\n}"
+				},
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"slug\": \"understanding-jwt-authentication\",\n  \"title\": \"Understanding JWT Authentication\",\n  \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n  \"status\": \"published\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:30:07 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "875"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"article\": {\n            \"id\": \"74c9c500-035e-424f-911d-cc544af1d37c\",\n            \"slug\": \"understanding-jwt-authentication\",\n            \"current_version_id\": \"f9cd1645-0eed-444f-858b-41fce5faa0a7\",\n            \"created_at\": \"2025-06-07T08:30:07.634943+07:00\",\n            \"updated_at\": \"2025-06-07T08:30:07.634943+07:00\"\n        },\n        \"version\": {\n            \"id\": \"f9cd1645-0eed-444f-858b-41fce5faa0a7\",\n            \"article_id\": \"74c9c500-035e-424f-911d-cc544af1d37c\",\n            \"version\": 1,\n            \"title\": \"Understanding JWT Authentication\",\n            \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n            \"status\": \"published\",\n            \"created_by\": \"135482d4-9810-43d5-9b8f-d1b306c9fbcf\",\n            \"created_at\": \"2025-06-07T08:30:07.637382+07:00\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Article Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Understanding JWT Authentication\",\n  \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n  \"status\": \"published\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/articles/:slug",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"articles",
+						":slug"
+					],
+					"variable": [
+						{
+							"key": "slug",
+							"value": "introduction-to-go"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "401 - Unauthorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"slug\": \"introduction-to-go\",\n  \"title\": \"Introduction to Go\",\n  \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n  \"status\": \"published\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:19:41 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "28"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Token is invalid\"\n}"
+				},
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"slug\": \"introduction-to-go\",\n  \"title\": \"Introduction to Go\",\n  \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n  \"status\": \"published\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:20:07 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "783"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"article\": {\n            \"id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"slug\": \"introduction-to-go\",\n            \"current_version_id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"created_at\": \"2025-06-07T08:20:07.573344+07:00\",\n            \"updated_at\": \"2025-06-07T08:20:07.573344+07:00\"\n        },\n        \"version\": {\n            \"id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"article_id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"version\": 1,\n            \"title\": \"Introduction to Go\",\n            \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n            \"status\": \"published\",\n            \"created_by\": \"135482d4-9810-43d5-9b8f-d1b306c9fbcf\",\n            \"created_at\": \"2025-06-07T08:20:07.578214+07:00\"\n        }\n    }\n}"
+				},
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"slug\": \"understanding-jwt-authentication\",\n  \"title\": \"Understanding JWT Authentication\",\n  \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n  \"status\": \"published\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:30:07 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "875"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"article\": {\n            \"id\": \"74c9c500-035e-424f-911d-cc544af1d37c\",\n            \"slug\": \"understanding-jwt-authentication\",\n            \"current_version_id\": \"f9cd1645-0eed-444f-858b-41fce5faa0a7\",\n            \"created_at\": \"2025-06-07T08:30:07.634943+07:00\",\n            \"updated_at\": \"2025-06-07T08:30:07.634943+07:00\"\n        },\n        \"version\": {\n            \"id\": \"f9cd1645-0eed-444f-858b-41fce5faa0a7\",\n            \"article_id\": \"74c9c500-035e-424f-911d-cc544af1d37c\",\n            \"version\": 1,\n            \"title\": \"Understanding JWT Authentication\",\n            \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n            \"status\": \"published\",\n            \"created_by\": \"135482d4-9810-43d5-9b8f-d1b306c9fbcf\",\n            \"created_at\": \"2025-06-07T08:30:07.637382+07:00\"\n        }\n    }\n}"
+				},
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Understanding JWT Authentication\",\n  \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n  \"status\": \"published\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles/:slug",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "introduction-to-go"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:40:02 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "861"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"article\": {\n            \"id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"slug\": \"introduction-to-go\",\n            \"current_version_id\": \"cdd9669d-65f7-4567-9885-c9478fb028d9\",\n            \"created_at\": \"2025-06-07T08:20:07.573344+07:00\",\n            \"updated_at\": \"2025-06-07T08:40:02.777488+07:00\"\n        },\n        \"version\": {\n            \"id\": \"cdd9669d-65f7-4567-9885-c9478fb028d9\",\n            \"article_id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"version\": 4,\n            \"title\": \"Understanding JWT Authentication\",\n            \"content\": \"JSON Web Tokens (JWT) are a popular method for securely transmitting information between parties as a JSON object. They're commonly used for authentication and authorization in modern web applications. A typical flow includes generating a token after user login, and verifying it on protected endpoints.\",\n            \"status\": \"published\",\n            \"created_by\": \"135482d4-9810-43d5-9b8f-d1b306c9fbcf\",\n            \"created_at\": \"2025-06-07T08:40:02.775536+07:00\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Article by Slug",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/articles/:slug",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"articles",
+						":slug"
+					],
+					"variable": [
+						{
+							"key": "slug",
+							"value": "introduction-to-go"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "404 - Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles/:slug",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "coba"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 00:10:27 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "42"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 404,\n    \"message\": \"Article not found\"\n}"
+				},
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles/:slug",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "introduction-to-go"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:20:34 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "783"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"article\": {\n            \"id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"slug\": \"introduction-to-go\",\n            \"current_version_id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"created_at\": \"2025-06-07T08:20:07.573344+07:00\",\n            \"updated_at\": \"2025-06-07T08:20:07.573344+07:00\"\n        },\n        \"version\": {\n            \"id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"article_id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"version\": 1,\n            \"title\": \"Introduction to Go\",\n            \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n            \"status\": \"published\",\n            \"created_by\": \"00000000-0000-0000-0000-000000000000\",\n            \"created_at\": \"2025-06-07T08:20:07.578214+07:00\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Article Versions by Slug",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/articles/:slug/versions",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"articles",
+						":slug",
+						"versions"
+					],
+					"variable": [
+						{
+							"key": "slug",
+							"value": "introduction-to-go"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "404 - Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles/:slug",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "coba"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 00:10:27 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "42"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 404,\n    \"message\": \"Article not found\"\n}"
+				},
+				{
+					"name": "200 - OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/articles/:slug",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"articles",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "introduction-to-go"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 07 Jun 2025 01:20:34 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "783"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 200,\n    \"data\": {\n        \"article\": {\n            \"id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"slug\": \"introduction-to-go\",\n            \"current_version_id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"created_at\": \"2025-06-07T08:20:07.573344+07:00\",\n            \"updated_at\": \"2025-06-07T08:20:07.573344+07:00\"\n        },\n        \"version\": {\n            \"id\": \"ca4c7e3a-7d87-40aa-a3a5-8960cd6b05fb\",\n            \"article_id\": \"17135fd8-de30-45c2-a53a-8bbe937cee37\",\n            \"version\": 1,\n            \"title\": \"Introduction to Go\",\n            \"content\": \"Go (or Golang) is an open-source programming language designed for building simple, fast, and reliable software. It was developed at Google to improve programming productivity in an era of multicore, networked machines and large codebases.\",\n            \"status\": \"published\",\n            \"created_by\": \"00000000-0000-0000-0000-000000000000\",\n            \"created_at\": \"2025-06-07T08:20:07.578214+07:00\"\n        }\n    }\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8087",
+			"type": "default"
+		}
+	]
+}
