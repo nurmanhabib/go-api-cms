@@ -51,5 +51,6 @@ func articleRoutes(e *gin.Engine, app *app.App) {
 	g := e.Group("/", middleware.AuthMiddleware(app))
 	g.POST("/api/v1/articles", c.Create)
 	g.GET("/api/v1/articles/:slug", c.GetArticlesBySlug)
+	g.PUT("/api/v1/articles/:slug", c.Update)
 	g.GET("/api/v1/articles/:slug/versions", c.GetArticleVersionsBySlug)
 }
