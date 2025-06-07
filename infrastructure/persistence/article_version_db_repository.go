@@ -16,6 +16,17 @@ func NewArticleVersionDBRepository(db *gorm.DB) *ArticleVersionDBRepository {
 	return &ArticleVersionDBRepository{db: db}
 }
 
+func (a *ArticleVersionDBRepository) FindByArticleID(ctx context.Context, articleID string) ([]*entity.ArticleVersion, error) {
+	var articleVersions []*entity.ArticleVersion
+
+	err := a.db.WithContext(ctx).Find(&articleVersions, "article_id = ?", articleID).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return articleVersions, nil
+}
+
 func (a *ArticleVersionDBRepository) FindByArticleIDAndVersion(ctx context.Context, articleID string, version int64) (*entity.ArticleVersion, error) {
 	var articleVersion entity.ArticleVersion
 
@@ -28,8 +39,12 @@ func (a *ArticleVersionDBRepository) FindByArticleIDAndVersion(ctx context.Conte
 }
 
 func (a *ArticleVersionDBRepository) FindByID(ctx context.Context, articleVersionID string) (*entity.ArticleVersion, error) {
-	//TODO implement me
-	panic("implement me")
+	var articleVersion entity.ArticleVersion
+	err := a.db.WithContext(ctx).First(&articleVersion, "id = ?", articleVersionID).Error
+	if err != nil {
+		return nil, err
+	}
+	return &articleVersion, nil
 }
 
 func (a *ArticleVersionDBRepository) Create(ctx context.Context, articleVersion *entity.ArticleVersion) error {

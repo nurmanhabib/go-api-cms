@@ -14,11 +14,11 @@ type ArticleService struct {
 }
 
 type ArticleRequest struct {
-	Slug      string
-	Title     string
-	Content   string
-	Status    string
-	CreatedBy uuid.UUID
+	Slug      string    `json:"slug,omitempty"`
+	Title     string    `json:"title,omitempty"`
+	Content   string    `json:"content,omitempty"`
+	Status    string    `json:"status,omitempty"`
+	CreatedBy uuid.UUID `json:"created_by,omitempty"`
 }
 
 func NewArticleService(app *app.App) *ArticleService {
@@ -39,6 +39,20 @@ func (a *ArticleService) GetBySlug(ctx context.Context, slug string) (*entity.Ar
 	return article, articleVersion, nil
 }
 
+func (a *ArticleService) GetVersionsBySlug(ctx context.Context, slug string) (*entity.Article, []*entity.ArticleVersion, error) {
+	article, err := a.app.Repo.ArticleRepo.FindBySlug(ctx, slug)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	articleVersions, err := a.app.Repo.ArticleVersionRepo.FindByArticleID(ctx, article.ID.String())
+	if err != nil {
+		return article, nil, err
+	}
+
+	return article, articleVersions, nil
+}
+
 func (a *ArticleService) Create(ctx context.Context, newArticle *ArticleRequest) (article *entity.Article, articleVersion *entity.ArticleVersion, err error) {
 	txRepo, tx := a.app.Repo.Tx()
 	defer func() {
@@ -56,7 +70,7 @@ func (a *ArticleService) Create(ctx context.Context, newArticle *ArticleRequest)
 	}
 
 	newEntityArticleVersion := &entity.ArticleVersion{
-		ID:        uuid.New(),
+		ID:        newEntityArticle.CurrentVersionID,
 		ArticleID: newEntityArticle.ID,
 		Version:   1,
 		Title:     newArticle.Title,
