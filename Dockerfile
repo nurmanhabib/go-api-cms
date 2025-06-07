@@ -28,8 +28,8 @@ WORKDIR /www
 
 COPY --from=builder /www/main /www/
 COPY --from=builder /www/database/migrations/ /www/database/migrations/
-COPY --from=builder /www/entrypoint.sh /www/entrypoint.sh
+COPY --from=builder /www/development.sh /www/development.sh
 
-RUN chmod +x entrypoint.sh
+RUN chmod +x development.sh
 
-ENTRYPOINT ["/www/entrypoint.sh"]
+ENTRYPOINT ["/www/main"]
