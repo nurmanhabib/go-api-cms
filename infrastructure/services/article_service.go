@@ -128,7 +128,6 @@ func (a *ArticleService) Update(ctx context.Context, articleID string, editArtic
 	}
 
 	if editArticle.Status == "published" {
-		existsArticle.Slug = editArticle.Slug
 		existsArticle.CurrentVersionID = newEntityArticleVersion.ID
 		errUpdate := txRepo.ArticleRepo.Update(ctx, existsArticle.ID.String(), existsArticle)
 		if errUpdate != nil {
