@@ -48,5 +48,6 @@ func userRegisterRoutes(e *gin.Engine, app *app.App) {
 func articleRoutes(e *gin.Engine, app *app.App) {
 	c := controller.NewArticleController(app)
 
-	e.GET("/api/v1/articles/:slug", c.GetArticlesBySlug)
+	g := e.Group("/", middleware.AuthMiddleware(app))
+	g.GET("/api/v1/articles/:slug", c.GetArticlesBySlug)
 }
